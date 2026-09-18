@@ -7,6 +7,7 @@ const errorHandler = require("./middleware/errorHandler");
 const app = express();
 app.use(express.json());
 app.use("/tareas", tareasRouter);
+app.use("/auth", authRouter);
 app.use(errorHandler);
 
 mongoose
