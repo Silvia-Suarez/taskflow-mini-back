@@ -1,7 +1,7 @@
 const express = require("express");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("../utils/asyncHandler");
-const Tarea = require("../models/Tarea");
+const tareaService = require("../services/tareaService");
 
 /* 
 ****BUEN ERROR

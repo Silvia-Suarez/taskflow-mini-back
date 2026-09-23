@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Usuario = require("../models/Usuario");
-+async function registrar({ nombre, email, password }) {
+
+async function registrar({ nombre, email, password }) {
   const usuarioExistente = await Usuario.findOne({ email });
   if (usuarioExistente)
     throw { status: 400, message: "El email ya está registrado" };
@@ -37,3 +38,8 @@ function generarToken(usuario) {
   );
 }
 module.exports = { registrar, login, generarToken };
+
+// CORS
+// Cross-Origin Resource Sharing
+//  const cors = require("cors");
+// app.use(cors());

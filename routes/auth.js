@@ -20,7 +20,7 @@ const validarRegistro = [
 ];
 
 router.post(
-  "/registrat",
+  "/registrar",
   validarRegistro,
   verificarValidaciones,
   authControllers.registrar,
