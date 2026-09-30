@@ -28,6 +28,46 @@ const validarRegistro = [
 
 // ... TODO: ValidarLogin?
 // ... TODO: ValidarPerfil?
+/**
+ * @swagger
+ * /api/auth/registrar:
+ *   post:
+ *     summary: Registrar un usuario
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [nombre, email, password]
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *                 minLength: 3
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *                 minLength: 6
+ *     responses:
+ *       201:
+ *         description: Usuario creado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                 usuario:
+ *                   $ref: '#/components/schemas/Usuario'
+ *                 token:
+ *                   type: string
+ *       400:
+ *         description: Datos inválidos
+ */
 router.post(
   "/registrar",
   validarRegistro,

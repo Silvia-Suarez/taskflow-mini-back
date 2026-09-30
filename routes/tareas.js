@@ -3,16 +3,6 @@ const { body } = require("express-validator");
 const { autenticar } = require("../middleware/auth");
 const tareaController = require("../controllers/tareaController");
 const { verificarValidaciones } = require("../middleware/validators");
-/* 
-****BUEN ERROR
-JSON {
-"ERROR": "El campo "texto" es obligaatorio para crear una tarea,
-"field": "text",
-"status": 400
-}
-****MAL ERROR
-Err : Error: ValidationError: texto:Path "text" is required
-*/
 
 const router = express.Router();
 
@@ -30,10 +20,56 @@ const validarTarea = [
   body("completed").optional().isBoolean(),
 ];
 
-// GET / tareas
+/**
+ * @swagger
+ * /api/tareas:
+ *   get:
+ *     summary: Obtener todas las tareas
+ *     tags: [Tareas]
+ *     responses:
+ *       200:
+ *         description: Lista de tareas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 tareas:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Tarea'
+ *                 mensaje:
+ *                   type: string
+ */
 router.get("/", tareaController.getTareas);
 
-// GET /tareas/:id
+/**
+ * @swagger
+ * /api/tareas/{id}:
+ *   get:
+ *     summary: Obtener una tarea por id
+ *     tags: [Tareas]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Tarea encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 tarea:
+ *                   $ref: '#/components/schemas/Tarea'
+ *                 mensaje:
+ *                   type: string
+ *       404:
+ *         description: Tarea no encontrada
+ */
 router.get("/:id", tareaController.getTareaById);
 
 // POST /tareas

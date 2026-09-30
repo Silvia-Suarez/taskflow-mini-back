@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger");
+
 
 const authRouter = require("./routes/auth");
 const tareasRouter = require("./routes/tareas");
@@ -19,6 +22,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // para parsear el body de las peticiones
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -32,6 +36,9 @@ app.get("/", (req, res) => {
     endpoints: {
       auth: "/api/auth",
       tareas: "/api/tareas",
+      usuarios: "/api/usuarios",
+      trivia: "/api/trivia",
+      docs: "/api-docs",
     },
   });
 });
