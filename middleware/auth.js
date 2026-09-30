@@ -36,7 +36,11 @@ function autorizar(...roles) {
     if (!roles.includes(req.usuario.role)) {
       return res
         .status(403)
-        .json({ error: "No tienes permisos para realizar esta acción" });
+        .json({
+          error: "No tienes permisos para realizar esta acción",
+          rolUsuario: req.usuario.role,
+          rolesPermitidos: roles,
+        });
     }
     next();
   };
