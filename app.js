@@ -8,6 +8,7 @@ const triviaRouter = require("./routes/trivia");
 const errorHandler = require("./middleware/errorHandler");
 const usuariosRouter = require("./routes/usuarios");
 
+const app = express();
 app.use(
   cors({
     origin: [process.env.CORS_ORIGIN, "http://localhost:5173", "..."],
@@ -16,7 +17,6 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
-const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // para parsear el body de las peticiones
 
