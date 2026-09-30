@@ -12,16 +12,16 @@ Err : Error: ValidationError: texto:Path "text" is required
 */
 
 // GET / tareas
-async function getTareas(req, res) {
-  const tareas = await Tarea.find();
+async function getTareas(usuarioId) {
+  const tareas = await Tarea.find({ usuario: usuarioId }).sort({ createdAt: -1 });
   return tareas;
 }
 
 // GET /tareas/:id
-async function getTareaById(id) {
-  const tarea = await Tarea.findById(id);
+async function getTareaById(id, usuarioId) {
+  const tarea = await Tarea.findOne({ _id: id, usuario: usuarioId });
   if (!tarea) {
-    return res.status(404).json({ error: "Tarea no fue encontrada" });
+    throw { status: 404, message: "Tarea no fue encontrada" };
   }
   return tarea;
 }

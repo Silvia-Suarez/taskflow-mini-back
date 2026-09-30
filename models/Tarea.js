@@ -19,6 +19,12 @@ const tareaSchema = new mongoose.Schema(
         values: ["baja", "media", "alta"],
         message: "La prioridad debe ser baja o media o alta",
       },
+      default: "media",
+    },
+    usuario: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Usuario",
+      required: [true, "La tarea debe estar asociada a un usuario"],
     },
   },
   { timestamps: true }, // createdAt y updatedAt

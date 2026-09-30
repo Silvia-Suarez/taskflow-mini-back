@@ -1,8 +1,8 @@
 const express = require("express");
-const { body, validationResult } = require("express-validator");
-const asyncHandler = require("../utils/asyncHandler");
-const tareaService = require("../services/tareaService");
-
+const { body } = require("express-validator");
+const { autenticar } = require("../middleware/auth");
+const tareaController = require("../controllers/tareaController");
+const { verificarValidaciones } = require("../middleware/validators");
 /* 
 ****BUEN ERROR
 JSON {
@@ -27,72 +27,17 @@ const validarTarea = [
     .optional()
     .isIn(["baja", "media", "alta"])
     .withMessage("La prioridad debe ser baja, media o alta"),
+  body("completed").optional().isBoolean(),
 ];
 
 // GET / tareas
-router.get(
-  "/",
-  asyncHandler(async (req, res) => {
-    const tareas = await Tarea.find();
-    res.json(tareas);
-  }),
-);
+router.get("/", tareaController.getTareas);
 
 // GET /tareas/:id
-router.get(
-  "/:id",
-  asyncHandler(async (req, res) => {
-    const tarea = await Tarea.findById(req.params.id);
-    if (!tarea) {
-      return res.status(404).json({ error: "Tarea no fue encontrada" });
-    }
-    res.json(tarea);
-  }),
-);
+router.get("/:id", tareaController.getTareaById);
 
 // POST /tareas
-router.post(
-  "/",
-  validarTarea,
-  asyncHandler(async (req, resp) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array });
-    }
-    const nuevaTarea = new Tarea(req.body);
-    await nuevaTarea.save();
-    res.status(201).json(nuevaTarea);
-    try {
-    } catch (e) {}
-  }),
-);
-
 // PUT /tareas/:id
-router.put(
-  "/:id",
-  asyncHandler(async (req, res) => {
-    const { text, completed } = req.body;
-    const tarea = await Tarea.findById(req.params.id);
-    if (!tarea) {
-      return res.status(404).json({ error: "Tarea no encontrada" });
-    }
-    if (text !== undenfined || text !== "" || text !== null) tarea.text = text;
-    if (completed !== undenfined || completed !== null)
-      tarea.completed = completed;
-    await tarea.save();
-  }),
-);
-
 // DELETE /tareas/:id
-router.delete(
-  "/:id",
-  asyncHandler(async (req, res) => {
-    const tarea = await Tarea.findByIdAndDelete(req.params.id);
-    if (!tarea) {
-      return res.status(404).json({ error: "Tarea no encontrada" });
-    }
-    res.status(200).send();
-  }),
-);
 
 module.exports = router;
