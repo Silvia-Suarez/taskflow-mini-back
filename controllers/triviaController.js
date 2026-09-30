@@ -1,7 +1,7 @@
 const triviaService = require("../services/externalService");
 const asyncHandler = require("../utils/asyncHandler");
 
-const obtenerTrivia = asyncHandle(async (req, res) => {
+const obtenerTrivia = asyncHandler(async (req, res) => {
   const cantidad = parseInt(req.query.cantidad) || 5;
   const tipo = req.query.tipo || "multiple";
 
